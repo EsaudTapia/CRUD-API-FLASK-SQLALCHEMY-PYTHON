@@ -41,6 +41,8 @@ def listar_personaje():
     return jsonify(result)
 
 
+
+
 @app.route('/personajes',methods=['POST'])
 def crear_personaje():
     
@@ -55,7 +57,11 @@ def crear_personaje():
     print(request.json)
     return personaje_schema.jsonify(nuevo_personaje)
 
-
+@app.route('/buscarPersonaje/<id>',methods=['GET'])
+def buscar_personaje(id):
+    personaje=Personaje.query.get(id)
+    result= personaje_schema.dump(personaje)
+    return jsonify(result)
 
 if __name__ =='__main__':
     app.run(debug=True)
