@@ -34,6 +34,13 @@ personaje_schema= personajeSchema()
 personajes_schema= personajeSchema(many=True)
 
 
+@app.route('/',methods=['GET'])
+def index():
+  
+     
+ return jsonify({'mensaje':'hola por ahora todo funciona con postman'})
+
+
 @app.route('/listapersonajes',methods=['GET'])
 def listar_personaje():
     allPerso=Personaje.query.all()
