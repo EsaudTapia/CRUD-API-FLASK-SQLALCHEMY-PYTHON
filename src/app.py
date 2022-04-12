@@ -71,7 +71,7 @@ def modificar_personaje(id):
     
     personaje.nombre= nombreper
     personaje.descripcion= descripcion
-    personaje.serie= serie
+    personaje.serie= serie 
     
     db.session.commit()
     
