@@ -52,8 +52,6 @@ def crear_personaje():
     nuevo_personaje=Personaje(nombreper,descripcion,serie)
     db.session.add(nuevo_personaje)
     db.session.commit()
-    
-    
     print(request.json)
     return personaje_schema.jsonify(nuevo_personaje)
 
@@ -62,6 +60,31 @@ def buscar_personaje(id):
     personaje=Personaje.query.get(id)
     result= personaje_schema.dump(personaje)
     return jsonify(result)
+
+@app.route('/modificar/<id>',methods=['PUT'])
+def modificar_personaje(id):
+    personaje=Personaje.query.get(id)
+    
+    nombreper= request.json['nombre']
+    descripcion= request.json['descripcion']
+    serie= request.json['serie']   
+    
+    personaje.nombre= nombreper
+    personaje.descripcion= descripcion
+    personaje.serie= serie
+    
+    db.session.commit()
+    
+    return personaje_schema.jsonify(personaje)
+      
+@app.route('/delete/<id>',methods=['DELETE'])
+def eleminar_personaje(id):
+     personaje=Personaje.query.get(id)
+     db.session.delete(personaje)
+     db.session.commit()
+     
+     return personaje_schema.jsonify(personaje)
+    
 
 if __name__ =='__main__':
     app.run(debug=True)
