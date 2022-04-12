@@ -1,3 +1,4 @@
+from asyncio import tasks
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -33,8 +34,19 @@ personajes_schema= personajeSchema(many=True)
 
 @app.route('/personajes',methods=['POST'])
 def crear_personaje():
+    
+    nombreper= request.json['nombre']
+    descripcion= request.json['descripcion']
+    serie= request.json['serie']
+    
+    
+    nuevo_personaje=Personaje(nombreper,descripcion,serie)
+    db.session.add(nuevo_personaje)
+    db.session.commit()
+    
+    
     print(request.json)
-    return 'amarro'
+    return personaje_schema.jsonify(nuevo_personaje)
 
 
 
